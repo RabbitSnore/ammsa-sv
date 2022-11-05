@@ -1,0 +1,437 @@
+---
+title: "AMMSA -- Swedish Validation, Main Analyses"
+output: github_document
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+source("ammsa_main-analysis.R")
+
+library(ggplot2)
+library(tidyr)
+```
+
+# Data screening and description
+
+## Descriptives and plotting
+
+### Demographics
+
+#### Age
+
+```{r}
+ammsa %>% 
+  summarise(
+    mean = mean(age, na.rm = TRUE),
+    sd = sd(age, na.rm = TRUE),
+    median = median(age, na.rm = TRUE)
+  )
+```
+
+```{r}
+ammsa %>% 
+  group_by(dem_01_gender) %>% 
+  summarise(
+    mean = mean(age, na.rm = TRUE),
+    sd = sd(age, na.rm = TRUE),
+    median = median(age, na.rm = TRUE)
+  )
+```
+
+```{r}
+ggplot(ammsa,
+       aes(
+         x = age
+       )) +
+  geom_histogram(
+    binwidth = 5
+  ) +
+  scale_x_continuous(
+    breaks = seq(18, 88, 5)
+  ) +
+  theme_classic()
+```
+
+```{r}
+ggplot(ammsa,
+       aes(
+         x = age
+       )) +
+  facet_wrap(~ dem_01_gender) +
+  geom_histogram(
+    binwidth = 5
+  ) +
+  scale_x_continuous(
+    breaks = seq(18, 88, 5)
+  ) +
+  theme_classic()
+```
+
+#### Gender
+
+1 = Woman
+
+2 = Man
+
+3 = Non-binary
+
+4 = Other genders
+
+```{r}
+table(ammsa$dem_01_gender)
+```
+
+#### Education
+
+1 = Primary school
+
+2 = High school or equivalent
+
+3 = Post-high school education
+
+13 = Studying bachelor's right now
+
+4 = Vocational training
+
+5 = Bachelor's
+
+6 = Master's
+
+7 = Doctorate
+
+```{r}
+table(ammsa$dem_02_edu)
+```
+
+#### Occupation
+
+1 = Studying
+
+2 = Unemployed
+
+3 = Working fulltime
+
+4 = Working parttime
+
+5 = Medical leave
+
+6 = Retired
+
+8 = Parental leave
+
+```{r}
+table(ammsa$dem_03_occu)
+```
+
+#### Place of residence
+
+1 = 
+
+2 = 
+
+3 = 
+
+4 = 
+
+5 = 
+
+6 =
+
+7 =
+
+8 =
+
+9 = 
+
+```{r}
+table(ammsa$dem_04_living)
+```
+
+#### Political spectrum
+
+```{r}
+ammsa %>% 
+  summarise(
+    mean = mean(dem_05_rightleft_1, na.rm = TRUE),
+    sd = sd(dem_05_rightleft_1, na.rm = TRUE),
+    median = median(dem_05_rightleft_1, na.rm = TRUE)
+  )
+```
+
+```{r}
+ggplot(ammsa,
+       aes(
+         x = dem_05_rightleft_1
+       )) +
+  geom_histogram(
+    binwidth = 1
+  ) +
+  scale_x_continuous(
+    breaks = seq(0, 10, 1)
+  ) +
+  theme_classic()
+```
+
+### Missing data
+
+```{r}
+sum(
+  is.na(ammsa_scale)
+)
+```
+
+## Bivariate correlations
+
+### AMMSA Items
+
+```{r}
+ammsa_cor_ci
+```
+
+### With Other Measures
+
+```{r}
+covergent_ci
+```
+
+```{r}
+scatter_grid
+```
+
+## Frequency distributions of AMMSA responses
+
+```{r}
+hist_grid
+```
+
+```{r}
+ggplot(ammsa,
+        aes(
+          sample = ammsa_total
+        )) +
+geom_qq(
+  distribution = qnorm
+) +
+geom_qq_line(
+  distribution = qnorm
+) +
+theme_classic()
+```
+
+```{r, fig.asp = 1}
+ammsa_scale %>% 
+    pivot_longer(
+        cols = everything(),
+        names_to = "item",
+        values_to = "value"
+    ) %>% 
+  ggplot(.,
+         aes(
+           x = value
+         )) +
+  facet_wrap(
+    ~ item,
+    nrow = 5) +
+  geom_histogram(
+    binwidth = 1
+  ) +
+  theme_classic()
+```
+
+## Multivariate normality
+
+### Mardia's tests
+
+```{r}
+mardia(ammsa_scale)
+```
+
+### Mahalanobis distances
+
+```{r}
+cfa_cov <- cov(ammsa_scale)
+
+cfa_means <- colMeans(ammsa_scale)
+
+mahal <- mahalanobis(ammsa_scale, center = cfa_means, cov = cfa_cov)
+
+mahal_p <- pchisq(mahal, df = ncol(ammsa_scale), lower.tail = FALSE)
+
+ID <- 1:nrow(ammsa_scale)
+
+mahal_data <- data.frame(ID, mahal, mahal_p)
+```
+
+```{r}
+arrange(mahal_data, by = desc(mahal))
+```
+
+```{r}
+ggplot(mahal_data,
+        aes(
+          sample = mahal
+        )) +
+geom_qq(
+  distribution = qchisq,
+  dparams = list(df = ncol(ammsa_scale))
+) +
+geom_qq_line(
+  distribution = qchisq,
+  dparams = list(df = ncol(ammsa_scale))
+) +
+theme_classic()
+```
+
+# Factor analysis
+
+## One-factor model
+
+```{r}
+summary(ammsa_cfa_1_fit,
+        standardized = TRUE,
+        fit.measures = TRUE)
+```
+
+```{r}
+standardizedsolution(ammsa_cfa_1_fit)
+```
+
+```{r}
+semPlot::semPaths(ammsa_cfa_1_fit, 
+                    what = "paths",
+                    whatLabels = "std",
+                    intercepts = FALSE,
+                    residuals = FALSE,
+                    curvePivot = TRUE,
+                    layout = "circle",
+                    sizeLat = 4,
+                    sizeMan = 3,
+                    groups = "latents",
+                    nodeLabels = c(1:30, "RMA"))
+```
+
+## Seven-factor model
+
+```{r}
+summary(ammsa_cfa_7_fit,
+        standardized = TRUE,
+        fit.measures = TRUE)
+```
+
+```{r}
+standardizedsolution(ammsa_cfa_7_fit)
+```
+
+```{r}
+semPlot::semPaths(ammsa_cfa_7_fit, 
+                  what = "paths",
+                  whatLabels = "std",
+                  intercepts = FALSE,
+                  residuals = FALSE,
+                  curvePivot = TRUE,
+                  layout = "circle",
+                  sizeLat = 4,
+                  sizeMan = 3,
+                  groups = "latents",
+                  nodeLabels = node_names)
+```
+
+# Model comparison
+
+```{r}
+cfa_lrt
+```
+
+# Invariance testing
+
+## One-factor model
+
+```{r}
+invar_cfa_1_fitind_1
+invar_cfa_1_fitind_2
+invar_cfa_1_fitind_3
+invar_cfa_1_fitind_4
+```
+
+## Seven-factor model
+
+```{r}
+invar_cfa_7_fitind_1
+invar_cfa_7_fitind_2
+invar_cfa_7_fitind_3
+invar_cfa_7_fitind_4
+```
+
+# Network modeling
+
+```{r}
+network_pars
+```
+
+```{r}
+network_fit_ind
+```
+
+```{r}
+qgraph(getmatrix(network_model_final, "omega"),
+         labels = 1:30,
+         layout = "spring",
+         vsize = 4,
+         edge.labels = TRUE,
+         edge.label.cex = .40,
+         edge.label.bg = "white",
+         edge.label.position = .50,
+         edge.color = "#151414",
+         vTrans = 200,
+         negDashed = FALSE)
+```
+
+## Centrality
+
+```{r}
+qgraph::centralityPlot(network_graph,
+                       include = c("Strength", "Closeness", "Betweenness"))
+```
+
+```{r}
+ammsa_strength
+```
+
+```{r}
+ammsa_between
+```
+
+## Average Shortest Path Length (ASPL)
+
+```{r}
+centrality(network_graph)$ShortestPathLengths[centrality(network_graph)$ShortestPathLengths %>% upper.tri()] %>% 
+  mean()
+```
+
+## Expected Influence
+
+```{r}
+centrality(network_graph)$OutExpectedInfluence %>% 
+  sort()
+```
+
+## What would happen if you persuaded people?
+
+### No persuasion, assuming moderate disagreement overall
+
+```{r}
+ammsa_sim_base_hist
+```
+
+### Strong persuasion to disagree with Item 23 ("On the Job Harassment")
+
+```{r}
+ammsa_sim_pers_hist
+```
+
+```{r}
+t.test(ammsa_sim_pers$total, ammsa_sim_base$total)
+```
+

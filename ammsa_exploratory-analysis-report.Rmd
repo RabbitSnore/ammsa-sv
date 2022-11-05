@@ -1,0 +1,167 @@
+---
+title: "AMMSA -- Swedish Validation, Exploratory Analyses"
+output: github_document
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+source("ammsa_main-analysis.R")
+source("ammsa_exploratory-analysis.R")
+
+library(ggplot2)
+library(tidyr)
+```
+
+# IRMA Explorations
+
+## Factor Analyses
+
+### Unidimensional Model
+
+```{r}
+summary(irma_uni_fit,
+        standardized = TRUE,
+        fit.measures = TRUE)
+```
+
+```{r}
+semPlot::semPaths(irma_uni_fit, 
+                    what = "paths",
+                    whatLabels = "std",
+                    intercepts = FALSE,
+                    residuals = FALSE,
+                    curvePivot = TRUE,
+                    layout = "circle",
+                    sizeLat = 4,
+                    sizeMan = 3,
+                    groups = "latents",
+                    nodeLabels = c(1:22, "RMA"))
+```
+
+### Four-Factor Model
+
+```{r}
+summary(irma_4_fit,
+        standardized = TRUE,
+        fit.measures = TRUE)
+```
+
+```{r}
+semPlot::semPaths(irma_4_fit, 
+                    what = "paths",
+                    whatLabels = "std",
+                    intercepts = FALSE,
+                    residuals = FALSE,
+                    curvePivot = TRUE,
+                    layout = "tree2",
+                    sizeLat = 4,
+                    sizeMan = 3,
+                    groups = "latents",
+                    nodeLabels = c(1:22, "AFI", "DMT", "NR", "SL"))
+```
+
+### Bifactor Model
+
+```{r}
+summary(irma_bi_fit,
+        standardized = TRUE,
+        fit.measures = TRUE)
+```
+
+```{r}
+semPlot::semPaths(irma_bi_fit, 
+                    what = "paths",
+                    whatLabels = "std",
+                    intercepts = FALSE,
+                    residuals = FALSE,
+                    curvePivot = TRUE,
+                    exoCov = FALSE,
+                    layout = "tree2",
+                    sizeLat = 4,
+                    sizeMan = 3,
+                    groups = "latents",
+                    bifactor = "rma",
+                    nodeLabels = c(1:22, "RMA", "AFI", "DMT", "NR", "SL"))
+```
+
+## Network Model
+
+```{r}
+network_pars_irma
+```
+
+```{r}
+network_fit_ind_irm
+```
+
+```{r}
+qgraph(getmatrix(network_model_final_irma, "omega"),
+         labels = 1:22,
+         layout = "spring",
+         vsize = 4,
+         edge.labels = TRUE,
+         edge.label.cex = .40,
+         edge.label.bg = "white",
+         edge.label.position = .50,
+         edge.color = "#151414",
+         vTrans = 200,
+         negDashed = FALSE)
+```
+
+## Centrality
+
+```{r}
+qgraph::centralityPlot(network_graph_irma,
+                       include = c("Strength", "Closeness", "Betweenness"))
+```
+
+```{r}
+irma_strength
+```
+
+```{r}
+irma_between
+```
+
+## Average Shortest Path Length (ASPL)
+
+```{r}
+centrality(network_graph_irma)$ShortestPathLengths[centrality(network_graph_irma)$ShortestPathLengths %>% upper.tri()] %>% 
+  mean()
+```
+
+## Expected Influence
+
+```{r}
+centrality(network_graph_irma)$OutExpectedInfluence %>% 
+  sort()
+```
+
+## What would happen if you persuaded people?
+
+### No persuasion, assuming moderate disagreement overall
+
+```{r}
+irma_sim_base_hist
+```
+
+### Strong persuasion to disagree with Item 20 ("Regretting Leading Men On")
+
+```{r}
+irma_sim_pers_hist
+```
+
+```{r}
+t.test(irma_sim_pers$total, irma_sim_base$total)
+```
+
+# AMMSA Exploration
+
+## Profiles of responses, by total score
+
+```{r, fig.height = 6}
+ammsa_profiles
+```
+
