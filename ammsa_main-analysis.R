@@ -591,7 +591,7 @@ set.seed(9898)
 ammsa_sim_base <- IsingSampler(10000, 
                                getmatrix(network_model_final, "omega"), 
                                c(rep(-.10, 30)), 
-                               responses = c(-1, 1))
+                               responses = c(0, 1))
 
 ammsa_sim_base <- ammsa_sim_base %>% 
   as.data.frame()
@@ -607,8 +607,8 @@ ggplot(ammsa_sim_base,
     binwidth = 2
   ) +
   scale_x_continuous(
-    limits = c(-35, 35),
-    breaks = seq(-30, 30, 10)
+    limits = c(-5, 35),
+    breaks = seq(0, 30, 10)
   ) +
   theme_classic()
 
@@ -617,7 +617,7 @@ ggplot(ammsa_sim_base,
 ammsa_sim_pers <- IsingSampler(10000, 
                                getmatrix(network_model_final, "omega"), 
                                c(rep(-.10, 22), -1, rep(-.1, 7)), 
-                               responses = c(-1, 1))
+                               responses = c(0, 1))
 
 ammsa_sim_pers <- ammsa_sim_pers %>% 
   as.data.frame()
@@ -630,11 +630,11 @@ ammsa_sim_pers_hist <-
            x = total
          )) +
   geom_histogram(
-    binwidth = 2
+    binwidth = 1
   ) +
   scale_x_continuous(
-    limits = c(-35, 35),
-    breaks = seq(-30, 30, 10)
+    limits = c(-5, 35),
+    breaks = seq(0, 30, 10)
   ) +
   theme_classic()
 

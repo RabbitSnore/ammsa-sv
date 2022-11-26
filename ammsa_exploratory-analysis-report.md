@@ -1,6 +1,6 @@
 AMMSA – Swedish Validation, Exploratory Analyses
 ================
-2022-10-30
+2022-11-26
 
 # IRMA Explorations
 
@@ -1849,6 +1849,8 @@ centrality(network_graph_irma)$OutExpectedInfluence %>%
 irma_sim_base_hist
 ```
 
+    ## Warning: Removed 2 rows containing missing values (geom_bar).
+
 ![](ammsa_exploratory-analysis-report_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
 
 ### Strong persuasion to disagree with Item 20 (“Regretting Leading Men On”)
@@ -1856,6 +1858,8 @@ irma_sim_base_hist
 ``` r
 irma_sim_pers_hist
 ```
+
+    ## Warning: Removed 2 rows containing missing values (geom_bar).
 
 ![](ammsa_exploratory-analysis-report_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
 
@@ -1867,13 +1871,13 @@ t.test(irma_sim_pers$total, irma_sim_base$total)
     ##  Welch Two Sample t-test
     ## 
     ## data:  irma_sim_pers$total and irma_sim_base$total
-    ## t = -6.4589, df = 19859, p-value = 1.079e-10
+    ## t = -5.595, df = 19997, p-value = 2.235e-08
     ## alternative hypothesis: true difference in means is not equal to 0
     ## 95 percent confidence interval:
-    ##  -0.6259255 -0.3344745
+    ##  -0.281273 -0.135327
     ## sample estimates:
     ## mean of x mean of y 
-    ##  -14.5162  -14.0360
+    ##   12.2941   12.5024
 
 # AMMSA Exploration
 

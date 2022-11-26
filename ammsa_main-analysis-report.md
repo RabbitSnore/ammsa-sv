@@ -4475,6 +4475,8 @@ ammsa_sim_base_hist
 ammsa_sim_pers_hist
 ```
 
+    ## Warning: Removed 2 rows containing missing values (geom_bar).
+
 ![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-30-1.png)<!-- -->
 
 ``` r
@@ -4485,10 +4487,10 @@ t.test(ammsa_sim_pers$total, ammsa_sim_base$total)
     ##  Welch Two Sample t-test
     ## 
     ## data:  ammsa_sim_pers$total and ammsa_sim_base$total
-    ## t = -15.187, df = 19870, p-value < 2.2e-16
+    ## t = -6.3507, df = 19997, p-value = 2.19e-10
     ## alternative hypothesis: true difference in means is not equal to 0
     ## 95 percent confidence interval:
-    ##  -2.090574 -1.612626
+    ##  -0.3521556 -0.1860444
     ## sample estimates:
     ## mean of x mean of y 
-    ##  -11.2830   -9.4314
+    ##   17.8529   18.1220

@@ -268,7 +268,7 @@ set.seed(9898)
 irma_sim_base <- IsingSampler(10000, 
                                getmatrix(network_model_final_irma, "omega"), 
                                c(rep(-.25, 22)), 
-                               responses = c(-1, 1))
+                               responses = c(0, 1))
 
 irma_sim_base <- irma_sim_base %>% 
   as.data.frame()
@@ -281,11 +281,11 @@ irma_sim_base_hist <-
            x = total
          )) +
   geom_histogram(
-    binwidth = 2
+    binwidth = 1
   ) +
   scale_x_continuous(
-    limits = c(-27, 27),
-    breaks = seq(-22, 22, 10)
+    limits = c(-5, 27),
+    breaks = seq(0, 22, 10)
   ) +
   theme_classic()
 
@@ -294,7 +294,7 @@ irma_sim_base_hist <-
 irma_sim_pers <- IsingSampler(10000, 
                               getmatrix(network_model_final_irma, "omega"), 
                               c(rep(-.25, 19), -1, rep(-.25, 2)), 
-                              responses = c(-1, 1))
+                              responses = c(0, 1))
 
 irma_sim_pers <- irma_sim_pers %>% 
   as.data.frame()
@@ -307,11 +307,11 @@ irma_sim_pers_hist <-
            x = total
          )) +
   geom_histogram(
-    binwidth = 2
+    binwidth = 1
   ) +
   scale_x_continuous(
-    limits = c(-27, 27),
-    breaks = seq(-22, 22, 10)
+    limits = c(-5, 27),
+    breaks = seq(0, 22, 10)
   ) +
   theme_classic()
 
