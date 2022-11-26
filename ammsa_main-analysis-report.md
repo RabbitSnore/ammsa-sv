@@ -4467,6 +4467,8 @@ centrality(network_graph)$OutExpectedInfluence %>%
 ammsa_sim_base_hist
 ```
 
+    ## Warning: Removed 2 rows containing missing values (geom_bar).
+
 ![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-29-1.png)<!-- -->
 
 ### Strong persuasion to disagree with Item 23 (“On the Job Harassment”)

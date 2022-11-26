@@ -285,7 +285,7 @@ irma_sim_base_hist <-
   ) +
   scale_x_continuous(
     limits = c(-5, 27),
-    breaks = seq(0, 22, 10)
+    breaks = seq(0, 22, 5)
   ) +
   theme_classic()
 
@@ -311,7 +311,7 @@ irma_sim_pers_hist <-
   ) +
   scale_x_continuous(
     limits = c(-5, 27),
-    breaks = seq(0, 22, 10)
+    breaks = seq(0, 22, 5)
   ) +
   theme_classic()
 

@@ -604,11 +604,11 @@ ggplot(ammsa_sim_base,
          x = total
        )) +
   geom_histogram(
-    binwidth = 2
+    binwidth = 1
   ) +
   scale_x_continuous(
     limits = c(-5, 35),
-    breaks = seq(0, 30, 10)
+    breaks = seq(0, 30, 5)
   ) +
   theme_classic()
 
