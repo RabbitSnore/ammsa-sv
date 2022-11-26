@@ -44,7 +44,7 @@ rma =~ irma_01_whiledrunk + irma_02_sluttycloth + irma_03_roomalone + irma_04_ac
 
 '
 
-if (!file.exists("./RDA/irma_uni_fit .rda")) {
+if (!file.exists("./rda/irma_uni_fit .rda")) {
   
   irma_uni_fit <- cfa(irma_uni_model,
                       data = irma_scale,
@@ -52,11 +52,11 @@ if (!file.exists("./RDA/irma_uni_fit .rda")) {
                       bootstrap = 5000,
                       meanstructure = TRUE)
   
-  save(irma_uni_fit, file = "./RDA/irma_uni_fit .rda")
+  save(irma_uni_fit, file = "./rda/irma_uni_fit .rda")
   
 } else {
   
-  load("./RDA/irma_uni_fit .rda")
+  load("./rda/irma_uni_fit .rda")
   
 }
 
@@ -88,7 +88,7 @@ sl =~ irma_18_agreeregret + irma_19_getbckatguys + irma_20_ledonregrets + irma_2
 
 '
 
-if (!file.exists("./RDA/irma_4_fit .rda")) {
+if (!file.exists("./rda/irma_4_fit .rda")) {
   
   irma_4_fit <- cfa(irma_4_model,
                     data = irma_scale,
@@ -96,11 +96,11 @@ if (!file.exists("./RDA/irma_4_fit .rda")) {
                     bootstrap = 5000,
                     meanstructure = TRUE)
   
-  save(irma_4_fit, file = "./RDA/irma_4_fit .rda")
+  save(irma_4_fit, file = "./rda/irma_4_fit .rda")
   
 } else {
   
-  load("./RDA/irma_4_fit .rda")
+  load("./rda/irma_4_fit .rda")
   
 }
 
@@ -155,7 +155,7 @@ nr  ~~ 0*sl
 
 '
 
-if (!file.exists("./RDA/irma_bi_fit .rda")) {
+if (!file.exists("./rda/irma_bi_fit .rda")) {
   
   irma_bi_fit <- cfa(irma_bi_model,
                      data = irma_scale,
@@ -164,11 +164,11 @@ if (!file.exists("./RDA/irma_bi_fit .rda")) {
                      meanstructure = TRUE,
                      std.lv = TRUE)
   
-  save(irma_bi_fit, file = "./RDA/irma_bi_fit .rda")
+  save(irma_bi_fit, file = "./rda/irma_bi_fit .rda")
   
 } else {
   
-  load("./RDA/irma_bi_fit .rda")
+  load("./rda/irma_bi_fit .rda")
   
 }
 
@@ -189,7 +189,7 @@ irma_cfa_bi_figure <-
 
 # Network model
 
-if (!file.exists("./RDA/ammsa_network_model_irma.rda")) {
+if (!file.exists("./rda/ammsa_network_model_irma.rda")) {
   
   network_model_irma <- varcov(data = irma_scale,
                                type = "ggm",
@@ -206,11 +206,11 @@ if (!file.exists("./RDA/ammsa_network_model_irma.rda")) {
       addalpha   = .05
     )
   
-  save(network_model_final_irma, file = "./RDA/ammsa_network_model_irma.rda")
+  save(network_model_final_irma, file = "./rda/ammsa_network_model_irma.rda")
   
 } else {
   
-  load("./RDA/ammsa_network_model_irma.rda") 
+  load("./rda/ammsa_network_model_irma.rda") 
   # Unless you absolutely need to rerun the model search procedure,
   # loading the premade skeleton is probably a good idea.
   
