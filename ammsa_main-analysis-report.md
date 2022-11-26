@@ -1,211 +1,10 @@
 AMMSA – Swedish Validation, Main Analyses
 ================
-2022-10-23
+2022-11-26
 
 # Data screening and description
 
-## Descriptives and plotting
-
-### Demographics
-
-#### Age
-
-``` r
-ammsa %>% 
-  summarise(
-    mean = mean(age, na.rm = TRUE),
-    sd = sd(age, na.rm = TRUE),
-    median = median(age, na.rm = TRUE)
-  )
-```
-
-    ## # A tibble: 1 × 3
-    ##    mean    sd median
-    ##   <dbl> <dbl>  <dbl>
-    ## 1  55.6  17.7     57
-
-``` r
-ammsa %>% 
-  group_by(dem_01_gender) %>% 
-  summarise(
-    mean = mean(age, na.rm = TRUE),
-    sd = sd(age, na.rm = TRUE),
-    median = median(age, na.rm = TRUE)
-  )
-```
-
-    ## # A tibble: 4 × 4
-    ##   dem_01_gender  mean    sd median
-    ##           <dbl> <dbl> <dbl>  <dbl>
-    ## 1             1  54.1  18.0   56.5
-    ## 2             2  57.7  17.1   59.5
-    ## 3             3  23    NA     23  
-    ## 4             4  47    NA     47
-
-``` r
-ggplot(ammsa,
-       aes(
-         x = age
-       )) +
-  geom_histogram(
-    binwidth = 5
-  ) +
-  scale_x_continuous(
-    breaks = seq(18, 88, 5)
-  ) +
-  theme_classic()
-```
-
-![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
-
-``` r
-ggplot(ammsa,
-       aes(
-         x = age
-       )) +
-  facet_wrap(~ dem_01_gender) +
-  geom_histogram(
-    binwidth = 5
-  ) +
-  scale_x_continuous(
-    breaks = seq(18, 88, 5)
-  ) +
-  theme_classic()
-```
-
-![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
-
-#### Gender
-
-1 = Woman
-
-2 = Man
-
-3 = Non-binary
-
-4 = Other genders
-
-``` r
-table(ammsa$dem_01_gender)
-```
-
-    ## 
-    ##   1   2   3   4 
-    ## 204 180   1   1
-
-#### Education
-
-1 = Primary school
-
-2 = High school or equivalent
-
-3 = Post-high school education
-
-13 = Studying bachelor’s right now
-
-4 = Vocational training
-
-5 = Bachelor’s
-
-6 = Master’s
-
-7 = Doctorate
-
-``` r
-table(ammsa$dem_02_edu)
-```
-
-    ## 
-    ##   1   2   3   4   5   6   7  13 
-    ##  28 123  59  41  75  50   7   3
-
-#### Occupation
-
-1 = Studying
-
-2 = Unemployed
-
-3 = Working fulltime
-
-4 = Working parttime
-
-5 = Medical leave
-
-6 = Retired
-
-8 = Parental leave
-
-``` r
-table(ammsa$dem_03_occu)
-```
-
-    ## 
-    ##   1   2   3   4   5   6   8 
-    ##  18  19 149  23  13 159   5
-
-#### Place of residence
-
-1 =
-
-2 =
-
-3 =
-
-4 =
-
-5 =
-
-6 =
-
-7 =
-
-8 =
-
-9 =
-
-``` r
-table(ammsa$dem_04_living)
-```
-
-    ## 
-    ##   1   2   3   4   5   6   7   8   9 
-    ##  86  34  74  19   5 103   6  50   9
-
-#### Political spectrum
-
-``` r
-ammsa %>% 
-  summarise(
-    mean = mean(dem_05_rightleft_1, na.rm = TRUE),
-    sd = sd(dem_05_rightleft_1, na.rm = TRUE),
-    median = median(dem_05_rightleft_1, na.rm = TRUE)
-  )
-```
-
-    ## # A tibble: 1 × 3
-    ##    mean    sd median
-    ##   <dbl> <dbl>  <dbl>
-    ## 1  5.29  2.44      5
-
-``` r
-ggplot(ammsa,
-       aes(
-         x = dem_05_rightleft_1
-       )) +
-  geom_histogram(
-    binwidth = 1
-  ) +
-  scale_x_continuous(
-    breaks = seq(0, 10, 1)
-  ) +
-  theme_classic()
-```
-
-    ## Warning: Removed 5 rows containing non-finite values (stat_bin).
-
-![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
-
-### Missing data
+## Missing data
 
 ``` r
 sum(
@@ -871,7 +670,7 @@ covergent_ci
 scatter_grid
 ```
 
-![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
 ## Frequency distributions of AMMSA responses
 
@@ -879,7 +678,7 @@ scatter_grid
 hist_grid
 ```
 
-![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 ``` r
 ggplot(ammsa,
@@ -895,7 +694,7 @@ geom_qq_line(
 theme_classic()
 ```
 
-![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 ``` r
 ammsa_scale %>% 
@@ -917,7 +716,7 @@ ammsa_scale %>%
   theme_classic()
 ```
 
-![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 ## Multivariate normality
 
@@ -1354,7 +1153,7 @@ geom_qq_line(
 theme_classic()
 ```
 
-![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
+![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
 # Factor analysis
 
@@ -1724,7 +1523,7 @@ semPlot::semPaths(ammsa_cfa_1_fit,
                     nodeLabels = c(1:30, "RMA"))
 ```
 
-![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
+![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
 
 ## Seven-factor model
 
@@ -2206,7 +2005,7 @@ semPlot::semPaths(ammsa_cfa_7_fit,
                   nodeLabels = node_names)
 ```
 
-![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
+![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
 
 # Model comparison
 
@@ -4490,7 +4289,7 @@ qgraph(getmatrix(network_model_final, "omega"),
          negDashed = FALSE)
 ```
 
-![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-33-1.png)<!-- -->
+![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
 
 ## Centrality
 
@@ -4499,7 +4298,7 @@ qgraph::centralityPlot(network_graph,
                        include = c("Strength", "Closeness", "Betweenness"))
 ```
 
-![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-34-1.png)<!-- -->
+![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
 
 ``` r
 ammsa_strength
@@ -4668,7 +4467,7 @@ centrality(network_graph)$OutExpectedInfluence %>%
 ammsa_sim_base_hist
 ```
 
-![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-39-1.png)<!-- -->
+![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-29-1.png)<!-- -->
 
 ### Strong persuasion to disagree with Item 23 (“On the Job Harassment”)
 
@@ -4676,7 +4475,7 @@ ammsa_sim_base_hist
 ammsa_sim_pers_hist
 ```
 
-![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-40-1.png)<!-- -->
+![](ammsa_main-analysis-report_files/figure-gfm/unnamed-chunk-30-1.png)<!-- -->
 
 ``` r
 t.test(ammsa_sim_pers$total, ammsa_sim_base$total)

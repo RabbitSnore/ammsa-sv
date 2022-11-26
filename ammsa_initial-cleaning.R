@@ -12,7 +12,7 @@ lapply(packages, library, character.only = TRUE)
 
 # Load raw data ----------------------------------------------------------------
 
-ammsa <- read_csv("ammsa_data_raw.csv") %>% 
+ammsa <- read_csv("./data/ammsa_data_raw.csv") %>% 
   slice(-1, -2)
 
 # Cleaning ---------------------------------------------------------------------

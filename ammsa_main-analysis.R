@@ -14,7 +14,15 @@ source("ammsa_helper-functions.R")
 
 # Load cleaned data ------------------------------------------------------------
 
-ammsa <- read_csv("ammsa_data_clean.csv")
+if (with_demo == TRUE) {
+  
+  ammsa <- read_csv("./data/ammsa_data_clean.csv")
+  
+} else if (with_demo == FALSE) {
+  
+  ammsa <- read_csv("./data/ammsa_data_clean_no-demographics.csv") 
+  
+}
 
 # Remove attention check failures 
 
@@ -28,7 +36,7 @@ ammsa_scale <- ammsa %>%
 
 # Load item text
 
-item_text <- read_csv("ammsa-swe_scale-item-text.csv")
+item_text <- read_csv("./data/ammsa-swe_scale-item-text.csv")
 
 # Reverse code relevant variables ----------------------------------------------
   
@@ -163,7 +171,7 @@ ammsa =~ ammsa_01_menlead + ammsa_02_misgivings + ammsa_03_emancipated + ammsa_0
 
 ## Model fitting
 
-if (!file.exists("./RDA/ammsa_cfa_1_fit.rda")) {
+if (!file.exists("./rda/ammsa_cfa_1_fit.rda")) {
   
   ammsa_cfa_1_fit <- cfa(ammsa_cfa_1,
                          data = ammsa_scale,
@@ -171,11 +179,11 @@ if (!file.exists("./RDA/ammsa_cfa_1_fit.rda")) {
                          bootstrap = 5000,
                          meanstructure = TRUE)
   
-  save(ammsa_cfa_1_fit, file = "./RDA/ammsa_cfa_1_fit.rda")
+  save(ammsa_cfa_1_fit, file = "./rda/ammsa_cfa_1_fit.rda")
   
 } else {
   
-  load("./RDA/ammsa_cfa_1_fit.rda")
+  load("./rda/ammsa_cfa_1_fit.rda")
   
 }
 
@@ -196,7 +204,7 @@ ammsa_cfa_1_figure <-
 
 ## Invariance testing
 
-if (!file.exists("./RDA/ammsa_cfa_1_invar_1.rda")) {
+if (!file.exists("./rda/ammsa_cfa_1_invar_1.rda")) {
   
   ammsa_cfa_1_invar_1 <- cfa(ammsa_cfa_1,
                              data = ammsa %>% 
@@ -237,17 +245,17 @@ if (!file.exists("./RDA/ammsa_cfa_1_invar_1.rda")) {
                              group.equal = c("loadings", "intercepts", "residuals"),
                              meanstructure = TRUE)
   
-  save(ammsa_cfa_1_invar_1, file = "./RDA/ammsa_cfa_1_invar_1.rda")
-  save(ammsa_cfa_1_invar_2, file = "./RDA/ammsa_cfa_1_invar_2.rda")
-  save(ammsa_cfa_1_invar_3, file = "./RDA/ammsa_cfa_1_invar_3.rda")
-  save(ammsa_cfa_1_invar_4, file = "./RDA/ammsa_cfa_1_invar_4.rda")
+  save(ammsa_cfa_1_invar_1, file = "./rda/ammsa_cfa_1_invar_1.rda")
+  save(ammsa_cfa_1_invar_2, file = "./rda/ammsa_cfa_1_invar_2.rda")
+  save(ammsa_cfa_1_invar_3, file = "./rda/ammsa_cfa_1_invar_3.rda")
+  save(ammsa_cfa_1_invar_4, file = "./rda/ammsa_cfa_1_invar_4.rda")
   
 } else {
   
-  load("./RDA/ammsa_cfa_1_invar_1.rda")
-  load("./RDA/ammsa_cfa_1_invar_2.rda")
-  load("./RDA/ammsa_cfa_1_invar_3.rda")
-  load("./RDA/ammsa_cfa_1_invar_4.rda")
+  load("./rda/ammsa_cfa_1_invar_1.rda")
+  load("./rda/ammsa_cfa_1_invar_2.rda")
+  load("./rda/ammsa_cfa_1_invar_3.rda")
+  load("./rda/ammsa_cfa_1_invar_4.rda")
   
 }
 
@@ -286,7 +294,7 @@ NP =~ ammsa_14_fascination + ammsa_19_politicians + ammsa_29_envdestr
 
 ## Model fitting
 
-if (!file.exists("./RDA/ammsa_cfa_7_fit.rda")) {
+if (!file.exists("./rda/ammsa_cfa_7_fit.rda")) {
   
   ammsa_cfa_7_fit <- cfa(ammsa_cfa_7,
                          data = ammsa_scale,
@@ -294,11 +302,11 @@ if (!file.exists("./RDA/ammsa_cfa_7_fit.rda")) {
                          bootstrap = 5000,
                          meanstructure = TRUE)
   
-  save(ammsa_cfa_7_fit, file = "./RDA/ammsa_cfa_7_fit.rda")
+  save(ammsa_cfa_7_fit, file = "./rda/ammsa_cfa_7_fit.rda")
   
 } else {
   
-  load("./RDA/ammsa_cfa_7_fit.rda")
+  load("./rda/ammsa_cfa_7_fit.rda")
   
 }
 
@@ -323,7 +331,7 @@ ammsa_cfa_7_figure <-
 
 ## Invariance testing
 
-if (!file.exists("./RDA/ammsa_cfa_7_invar_1.rda")) {
+if (!file.exists("./rda/ammsa_cfa_7_invar_1.rda")) {
 
   ammsa_cfa_7_invar_1 <- cfa(ammsa_cfa_7,
                              data = ammsa %>% 
@@ -364,17 +372,17 @@ if (!file.exists("./RDA/ammsa_cfa_7_invar_1.rda")) {
                              group.equal = c("loadings", "intercepts", "residuals"),
                              meanstructure = TRUE)
   
-  save(ammsa_cfa_7_invar_1, file = "./RDA/ammsa_cfa_7_invar_1.rda")
-  save(ammsa_cfa_7_invar_2, file = "./RDA/ammsa_cfa_7_invar_2.rda")
-  save(ammsa_cfa_7_invar_3, file = "./RDA/ammsa_cfa_7_invar_3.rda")
-  save(ammsa_cfa_7_invar_4, file = "./RDA/ammsa_cfa_7_invar_4.rda")
+  save(ammsa_cfa_7_invar_1, file = "./rda/ammsa_cfa_7_invar_1.rda")
+  save(ammsa_cfa_7_invar_2, file = "./rda/ammsa_cfa_7_invar_2.rda")
+  save(ammsa_cfa_7_invar_3, file = "./rda/ammsa_cfa_7_invar_3.rda")
+  save(ammsa_cfa_7_invar_4, file = "./rda/ammsa_cfa_7_invar_4.rda")
 
 } else {
   
-  load("./RDA/ammsa_cfa_7_invar_1.rda")
-  load("./RDA/ammsa_cfa_7_invar_2.rda")
-  load("./RDA/ammsa_cfa_7_invar_3.rda")
-  load("./RDA/ammsa_cfa_7_invar_4.rda")
+  load("./rda/ammsa_cfa_7_invar_1.rda")
+  load("./rda/ammsa_cfa_7_invar_2.rda")
+  load("./rda/ammsa_cfa_7_invar_3.rda")
+  load("./rda/ammsa_cfa_7_invar_4.rda")
   
 }
 
@@ -397,37 +405,64 @@ ammsa_cor_ci <- cor_ci(ammsa_cor, nrow(ammsa_scale))
 ammsa_cov <- ammsa_scale %>% 
   cov(use = "pairwise.complete")
 
-if (!file.exists("./RDA/ammsa_cor_matrix_n386.rda")) {
+if (!file.exists("./rda/ammsa_cor_matrix_n386.rda")) {
   
-  save(ammsa_cor, file = "./RDA/ammsa_cor_matrix_n386.rda")
-  save(ammsa_cov, file = "./RDA/ammsa_cov_matrix_n386.rda")
+  save(ammsa_cor, file = "./rda/ammsa_cor_matrix_n386.rda")
+  save(ammsa_cov, file = "./rda/ammsa_cov_matrix_n386.rda")
   
 }
 
-convergent <- 
-  ammsa %>% 
-  select(
-    ammsa_total,
-    asi_total,
-    asi_hostile,
-    asi_benevolent,
-    asi_paternalism,
-    asi_genderdiff,
-    asi_heterointim,
-    irma_total,
-    irma_asked_for_it,
-    irma_didnt_mean_to,
-    irma_not_rape,
-    irma_she_lied,
-    sc_total,
-    sdo_total,
-    age,
-    dem_02_edu,
-    dem_04_living,
-    dem_05_rightleft_1) %>% 
-  cor(use = "pairwise.complete")
-
-covergent_ci <- cor_ci(convergent, nrow(ammsa))
+if (with_demo == TRUE) {
+  
+  convergent <- 
+    ammsa %>% 
+    select(
+      ammsa_total,
+      asi_total,
+      asi_hostile,
+      asi_benevolent,
+      asi_paternalism,
+      asi_genderdiff,
+      asi_heterointim,
+      irma_total,
+      irma_asked_for_it,
+      irma_didnt_mean_to,
+      irma_not_rape,
+      irma_she_lied,
+      sc_total,
+      sdo_total,
+      age,
+      dem_02_edu,
+      dem_04_living,
+      dem_05_rightleft_1) %>% 
+    cor(use = "pairwise.complete")
+  
+  covergent_ci <- cor_ci(convergent, nrow(ammsa))
+  
+} else if (with_demo == FALSE) {
+  
+  convergent <- 
+    ammsa %>% 
+    select(
+      ammsa_total,
+      asi_total,
+      asi_hostile,
+      asi_benevolent,
+      asi_paternalism,
+      asi_genderdiff,
+      asi_heterointim,
+      irma_total,
+      irma_asked_for_it,
+      irma_didnt_mean_to,
+      irma_not_rape,
+      irma_she_lied,
+      sc_total,
+      sdo_total) %>% 
+    cor(use = "pairwise.complete")
+  
+  covergent_ci <- cor_ci(convergent, nrow(ammsa))
+  
+}
 
 plot_asi  <- scatter_plot("asi_total", "Ambivalent Sexism", c(1, 7))
 plot_hs   <- scatter_plot("asi_hostile", "Hostile Sexism", c(1, 7))
@@ -477,7 +512,7 @@ parallel_ammsa <- psych::fa.parallel(ammsa_scale)
 
 # Network analysis -------------------------------------------------------------
 
-if (!file.exists("./RDA/ammsa_network_model.rda")) {
+if (!file.exists("./rda/ammsa_network_model.rda")) {
   
   network_model <- varcov(data = ammsa_scale,
                           type = "ggm",
@@ -494,11 +529,11 @@ if (!file.exists("./RDA/ammsa_network_model.rda")) {
       addalpha   = .05
     )
   
-  save(network_model_final, file = "./RDA/ammsa_network_model.rda")
+  save(network_model_final, file = "./rda/ammsa_network_model.rda")
   
 } else {
   
-  load("./RDA/ammsa_network_model.rda") 
+  load("./rda/ammsa_network_model.rda") 
   # Unless you absolutely need to rerun the model search procedure,
   # loading the premade skeleton is probably a good idea.
   

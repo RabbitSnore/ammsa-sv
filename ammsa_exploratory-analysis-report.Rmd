@@ -7,6 +7,8 @@ date: "`r Sys.Date()`"
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
+with_demo <- FALSE
+
 source("ammsa_main-analysis.R")
 source("ammsa_exploratory-analysis.R")
 

@@ -14,7 +14,15 @@ lapply(packages, library, character.only = TRUE)
 
 # IRMA exploration -------------------------------------------------------------
 
-irma <- read_csv("ammsa_data_clean.csv")
+if (with_demo == TRUE) {
+  
+  irma <- read_csv("./data/ammsa_data_clean.csv")
+  
+} else if (with_demo == FALSE) {
+  
+  irma <- read_csv("./data/ammsa_data_clean_no-demographics.csv") 
+  
+}
 
 # Remove attention check failures 
 

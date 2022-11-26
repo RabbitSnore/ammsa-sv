@@ -1,0 +1,179 @@
+---
+title: "AMMSA -- Swedish Validation, Analyses with Demographics"
+output: github_document
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+with_demo <- TRUE
+source("ammsa_main-analysis.R")
+
+library(ggplot2)
+library(tidyr)
+```
+
+# Descriptive and Correlation Analysis
+
+## Demographics
+
+### Age
+
+```{r}
+ammsa %>% 
+  summarise(
+    mean = mean(age, na.rm = TRUE),
+    sd = sd(age, na.rm = TRUE),
+    median = median(age, na.rm = TRUE)
+  )
+```
+
+```{r}
+ammsa %>% 
+  group_by(dem_01_gender) %>% 
+  summarise(
+    mean = mean(age, na.rm = TRUE),
+    sd = sd(age, na.rm = TRUE),
+    median = median(age, na.rm = TRUE)
+  )
+```
+
+```{r}
+ggplot(ammsa,
+       aes(
+         x = age
+       )) +
+  geom_histogram(
+    binwidth = 5
+  ) +
+  scale_x_continuous(
+    breaks = seq(18, 88, 5)
+  ) +
+  theme_classic()
+```
+
+```{r}
+ggplot(ammsa,
+       aes(
+         x = age
+       )) +
+  facet_wrap(~ dem_01_gender) +
+  geom_histogram(
+    binwidth = 5
+  ) +
+  scale_x_continuous(
+    breaks = seq(18, 88, 5)
+  ) +
+  theme_classic()
+```
+
+### Gender
+
+1 = Woman
+
+2 = Man
+
+3 = Non-binary
+
+4 = Other genders
+
+```{r}
+table(ammsa$dem_01_gender)
+```
+
+### Education
+
+1 = Primary school
+
+2 = High school or equivalent
+
+3 = Post-high school education
+
+13 = Studying bachelor's right now
+
+4 = Vocational training
+
+5 = Bachelor's
+
+6 = Master's
+
+7 = Doctorate
+
+```{r}
+table(ammsa$dem_02_edu)
+```
+
+### Occupation
+
+1 = Studying
+
+2 = Unemployed
+
+3 = Working fulltime
+
+4 = Working parttime
+
+5 = Medical leave
+
+6 = Retired
+
+8 = Parental leave
+
+```{r}
+table(ammsa$dem_03_occu)
+```
+
+### Place of residence
+
+1 = 
+
+2 = 
+
+3 = 
+
+4 = 
+
+5 = 
+
+6 =
+
+7 =
+
+8 =
+
+9 = 
+
+```{r}
+table(ammsa$dem_04_living)
+```
+
+### Political spectrum
+
+```{r}
+ammsa %>% 
+  summarise(
+    mean = mean(dem_05_rightleft_1, na.rm = TRUE),
+    sd = sd(dem_05_rightleft_1, na.rm = TRUE),
+    median = median(dem_05_rightleft_1, na.rm = TRUE)
+  )
+```
+
+```{r}
+ggplot(ammsa,
+       aes(
+         x = dem_05_rightleft_1
+       )) +
+  geom_histogram(
+    binwidth = 1
+  ) +
+  scale_x_continuous(
+    breaks = seq(0, 10, 1)
+  ) +
+  theme_classic()
+```
+
+### Correlations
+
+```{r}
+covergent_ci
+```

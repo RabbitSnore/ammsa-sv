@@ -39,7 +39,8 @@ vignettes/*.pdf
 .Renviron
 
 # Data
-*.csv
+/data/ammsa_data_raw.csv
+/data/ammsa_data_clean.csv
 
 # Large figures
 
