@@ -12,6 +12,8 @@ lapply(packages, library, character.only = TRUE)
 
 source("ammsa_helper-functions.R")
 
+with_demo <- FALSE
+
 # Load cleaned data ------------------------------------------------------------
 
 if (with_demo == TRUE) {
